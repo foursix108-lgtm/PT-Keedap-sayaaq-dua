@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>PT. Kedap Sayaaq Dua | Perkebunan Kelapa Sawit Profesional</title>
+    <meta name="description" content="PT. Kedap Sayaaq Dua adalah perusahaan perkebunan kelapa sawit terkemuka di Kalimantan Timur.">
+    
+    <link rel="icon" type="image/png" href="Aset/logo_ksd.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- STYLE UMUM --- */
+        * { font-family: 'Poppins', sans-serif; }
+        [x-cloak] { display: none !important; }
+        body {
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3d5e5 100%);
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND HERO --- */
+        .hero-bg {
+            /* 🔴 [GANTI FOTO BACKGROUND BESAR] Ganti link di dalam url('...') dengan 'Aset/nama_file.jpg' */
+            background: linear-gradient(rgba(42, 107, 47, 0.8), rgba(42, 107, 47, 0.8)),
+            url('aset/Bg.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(74, 157, 111, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 122, 74, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* --- STYLE NAVBAR --- */
+        .nav-link { position: relative; transition: all 0.3s ease; color: #f5f5f5; text-decoration: none; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -8px; left: 0; background-color: #6ba547; transition: width 0.3s ease; }
+        .nav-link:hover { color: #6ba547; }
+        .nav-link:hover::after { width: 100%; }
+
+        .navbar {
+            background: linear-gradient(90deg, rgba(26, 77, 46, 0.95), rgba(45, 122, 74, 0.95));
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        }
+        .scrolled { background: linear-gradient(90deg, rgba(26, 77, 46, 0.98), rgba(45, 122, 74, 0.98)); }
+
+        /* --- ANIMASI & EFEK KARTU --- */
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Efek Sliding Gambar Halus */
+        .sliding-track {
+            display: flex;
+            transition: transform 0.7s ease-in-out;
+            height: 100%;
+        }
+        .sliding-item {
+            min-width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-12px); box-shadow: 0 30px 60px rgba(42, 107, 47, 0.25); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4a9d6f 0%, #2d7a4a 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(74, 157, 111, 0.3);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #3a8d5f 0%, #1d6a3a 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(42, 107, 47, 0.4);
+        }
+
+        .section-title { position: relative; padding-bottom: 20px; display: inline-block; }
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 80px; height: 4px;
+            background: linear-gradient(90deg, #2d7a4a, #6ba547); border-radius: 2px;
+        }
+
+        .stats-box {
+            background: rgba(107, 165, 71, 0.1); border: 2px solid rgba(107, 165, 71, 0.3);
+            border-radius: 15px; 
+            text-align: center; transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .stats-box:hover { background: rgba(107, 165, 71, 0.15); border-color: #4a9d6f; transform: translateY(-5px); }
+
+        /* --- CUSTOM SCROLLBAR (HIJAU) --- */
+        .green-scrollbar::-webkit-scrollbar { height: 10px; }
+        .green-scrollbar::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
+        .green-scrollbar::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 10px; border: 2px solid #e2e8f0; }
+        .green-scrollbar::-webkit-scrollbar-thumb:hover { background: #15803d; }
+
+        details summary::-webkit-details-marker { display: none; }
+
+        /* ============================================================
+           CSS STRUKTUR ORGANISASI (POHON COMPLEX)
+           ============================================================ */
+        .org-tree-container {
+            overflow-x: auto;
+            text-align: center;
+            padding-bottom: 2rem;
+            cursor: grab;
+        }
+        .org-tree-container:active { cursor: grabbing; }
+        .org-tree { display: inline-block; min-width: 100%; }
+        .org-tree ul {
+            padding-top: 20px; position: relative;
+            transition: all 0.5s; display: flex; justify-content: center;
+        }
+        .org-tree li {
+            float: left; text-align: center; list-style-type: none;
+            position: relative; padding: 20px 10px 0 10px; transition: all 0.5s;
+        }
+        /* Garis Konektor */
+        .org-tree li::before, .org-tree li::after {
+            content: ''; position: absolute; top: 0; right: 50%;
+            border-top: 2px solid #16a34a; width: 50%; height: 20px;
+        }
+        .org-tree li::after { right: auto; left: 50%; border-left: 2px solid #16a34a; }
+        .org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
+        .org-tree li:only-child { padding-top: 0; }
+        .org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+        .org-tree li:last-child::before{ border-right: 2px solid #16a34a; border-radius: 0 10px 0 0; }
+        .org-tree li:first-child::after{ border-radius: 10px 0 0 0; }
+        .org-tree ul ul::before{
+            content: ''; position: absolute; top: 0; left: 50%;
+            border-left: 2px solid #16a34a; width: 0; height: 20px;
+        }
+        /* Kartu Jabatan */
+        .org-card {
+            background: white; border: 1px solid #e2e8f0; 
+            border-top: 4px solid #16a34a;
+            padding: 8px 12px; border-radius: 12px; display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s;
+            min-width: 130px; position: relative; z-index: 10;
+        }
+        .org-card img {
+            width: 50px; height: 50px; border-radius: 50%; object-fit: cover; 
+            margin: 0 auto 5px; border: 2px solid #16a34a;
+        }
+        .org-card:hover {
+            background: #f0fdf4; transform: translateY(-5px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); z-index: 20; border-color: #16a34a;
+        }
+        .org-name { font-weight: 700; color: #0f172a; font-size: 0.75rem; line-height: 1.2; }
+        .org-role { color: #16a34a; font-size: 0.65rem; font-weight: 600; margin-bottom: 2px; text-transform: uppercase; }
+        
+        @media (max-width: 768px) { .hero-bg { min-height: 60vh; } }
+    </style>
+</head>
+<body x-data="{ menuOpen: false }">
+
+    <nav class="navbar" x-data="{ navScroll: false }" @scroll.window="navScroll = window.pageYOffset > 50" :class="{ 'scrolled': navScroll }">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative z-50">
+            <div class="flex items-center gap-4">
+                <img src="Aset/logo_ksd.png" alt="Logo" class="h-10 w-10 md:h-16 md:w-16 rounded-lg object-cover shadow-lg">
+                <div>
+                    <div class="font-bold text-white text-base md:text-lg">PT. Kedap Sayaaq Dua</div>
+                    <div class="text-[10px] md:text-xs text-green-200 font-semibold">Perkebunan Kelapa Sawit</div>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#beranda" class="nav-link text-sm font-semibold">Beranda</a>
+                <a href="#tentang" class="nav-link text-sm font-semibold">Tentang</a>
+                <a href="#produk" class="nav-link text-sm font-semibold">Produk</a>
+                <a href="#fasilitas" class="nav-link text-sm font-semibold">Fasilitas</a>
+                <a href="#galeri" class="nav-link text-sm font-semibold">Galeri</a>
+                <a href="#jabatan" class="nav-link text-sm font-semibold">Tim Kami</a>
+                <a href="#kontak" class="nav-link text-sm font-semibold">Kontak</a>
+                <div class="h-5 w-px bg-white/30"></div>
+                <button @click="menuOpen = true" class="text-white hover:text-green-300"><i class="fas fa-bars text-2xl"></i></button>
+            </div>
+            <div class="flex items-center md:hidden">
+                <button @click="menuOpen = true" class="text-white p-2"><i class="fas fa-bars text-2xl"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div x-show="menuOpen" x-cloak class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[150]" @click="menuOpen = false"></div>
+    <div class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-gradient-to-b from-[#0f2e1b] to-[#1a4d2e] z-[160] shadow-2xl flex flex-col text-white transition-transform duration-300 ease-out" :style="menuOpen ? 'transform: translateX(0)' : 'transform: translateX(100%)'">
+        <div class="flex items-center justify-between p-8 border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <img src="Aset/logo_ksd.png" alt="Logo" class="h-10 w-10 rounded">
+                <span class="font-bold text-lg">PT. Kedap Sayaaq Dua</span>
+            </div>
+            <button @click="menuOpen = false" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><i class="fas fa-times text-lg"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-8">
+            <nav class="space-y-2">
+                <a href="#beranda" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">01. Beranda</a>
+                <a href="#tentang" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">02. Tentang Kami</a>
+                <a href="#produk" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">03. Produk</a>
+                <a href="#fasilitas" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">04. Fasilitas</a>
+                <a href="#galeri" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">05. Galeri</a>
+                <a href="#jabatan" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">06. Tim Kami</a>
+                <a href="#kontak" @click="menuOpen = false" class="block text-2xl md:text-3xl font-bold py-3 hover:text-green-400 border-b border-white/5">07. Kontak</a>
+            </nav>
+            <div class="mt-12 space-y-6">
+                <h4 class="text-sm uppercase tracking-widest text-green-300 font-semibold">Info Cepat</h4>
+                <div class="flex items-start gap-4 text-slate-300 hover:text-white transition">
+                    <i class="fas fa-map-marker-alt mt-1 text-green-500"></i>
+                    <p class="text-sm leading-relaxed">Kec. Mook Manaar Bulatn, Kab. Kutai Barat, Kalimantan Timur</p>
+                </div>
+                <div class="flex items-center gap-4 text-slate-300 hover:text-white transition">
+                    <i class="fas fa-envelope text-green-500"></i>
+                    <p class="text-sm">contact@kedapsayaaq2.co.id</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="beranda" class="hero-bg pt-32">
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+            <div class="max-w-2xl fade-in">
+                <div class="inline-block bg-green-400/20 border border-green-400/50 px-4 py-2 rounded-full mb-6">
+                    <span class="text-green-200 text-sm font-semibold flex items-center gap-2"><i class="fas fa-leaf"></i> Perkebunan Kelapa Sawit Terpadu</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Pertumbuhan Berkelanjutan untuk Masa Depan</h1>
+                <p class="text-xl text-green-100 mb-12 leading-relaxed max-w-xl">PT. Kedap Sayaaq Dua adalah pemimpin industri perkebunan kelapa sawit dengan komitmen penuh terhadap praktik pertanian berkelanjutan.</p>
+                <div class="flex gap-4 flex-wrap mt-8 mb-8">
+                    <button onclick="document.getElementById('infoModal').style.display='flex'" class="btn-primary text-white px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide"><i class="fas fa-arrow-right mr-2"></i> Pelajari Lebih Lanjut</button>
+                    <button onclick="document.querySelector('#kontak').scrollIntoView({behavior:'smooth'})" class="border-2 border-white text-white hover:bg-white hover:text-green-700 px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide transition"><i class="fas fa-phone mr-2"></i> Hubungi Kami</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tentang" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <h2 class="section-title text-4xl font-bold text-slate-900 mb-6">Tentang PT. Kedap Sayaaq Dua</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed mb-6">PT. Kedap Sayaaq Dua adalah perusahaan perkebunan kelapa sawit terkemuka di Indonesia yang beroperasi sejak tahun 1995. Kami mengelola dan mengoperasikan perkebunan kelapa sawit seluas lebih dari 25.500 hektar yang tersebar di berbagai lokasi strategis.</p>
+                    <p class="text-lg text-slate-600 leading-relaxed mb-8">Dengan lebih dari 3.800 karyawan tetap dan komitmen penuh terhadap keberlanjutan lingkungan, kesejahteraan karyawan, dan tanggung jawab sosial kemasyarakatan, kami terus berinovasi.</p>
+                    
+                    <div class="grid grid-cols-3 gap-2 md:gap-6">
+                        <div class="stats-box card-hover p-2 md:p-8">
+                            <div class="text-base md:text-3xl font-bold text-green-700 mb-1 md:mb-2">25,500</div>
+                            <div class="text-[10px] md:text-sm font-semibold text-slate-600 leading-tight">Hektar Perkebunan</div>
+                        </div>
+                        <div class="stats-box card-hover p-2 md:p-8">
+                            <div class="text-base md:text-3xl font-bold text-green-700 mb-1 md:mb-2">3,800+</div>
+                            <div class="text-[10px] md:text-sm font-semibold text-slate-600 leading-tight">Karyawan Tetap</div>
+                        </div>
+                        <div class="stats-box card-hover p-2 md:p-8">
+                            <div class="text-base md:text-3xl font-bold text-green-700 mb-1 md:mb-2">28+</div>
+                            <div class="text-[10px] md:text-sm font-semibold text-slate-600 leading-tight">Tahun Operasi</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.CVe5TbKbPCD_0BJHtHEn9QHaFj?pid=Api&P=0&h=220" class="rounded-2xl shadow-2xl w-full h-64 object-cover card-hover">
+                    <img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1000,h_450/https://dayaknews.com/wp-content/uploads/2022/08/tambang1.jpg" class="rounded-2xl shadow-2xl w-full h-64 object-cover card-hover">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.5CS9mcbFLiBWYSTBWxqkeAHaHa?pid=Api&P=0&h=220" class="rounded-2xl shadow-2xl w-full h-64 object-cover card-hover">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.MRUZv9pB8P_dLcHbx-zOQgHaE8?pid=Api&P=0&h=220" class="rounded-2xl shadow-2xl w-full h-64 object-cover card-hover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="produk" class="py-24 bg-gradient-to-b from-slate-50 to-white" x-data="{ 
+        activeProduct: null,
+        products: [
+            {
+                id: 1,
+                title: 'CPO Premium',
+                images: [
+                    'https://tse4.mm.bing.net/th/id/OIP.x2b4bCWAoU17wNOccfXSWQHaEK?pid=Api&P=0&h=220',
+                    'Aset/produk/CPO02.png',
+                    'Aset/produk/CPO01.png' 
+                ],
+                shortDesc: 'Crude Palm Oil (CPO) berkualitas tinggi untuk pasar global.',
+                fullDesc: 'Crude Palm Oil (CPO) kami diproses melalui sistem ekstraksi modern untuk menjaga kadar asam lemak bebas yang rendah dan memenuhi standar RSPO/ISPO. Minyak ini adalah bahan dasar utama untuk industri minyak goreng, sabun, dan biodiesel.',
+                capacity: '500 Ton/Bulan'
+            },
+            {
+                id: 2,
+                title: 'Palm Kernel',
+                images: [
+                    'Aset/image_f14d5c.png',
+                    'https://images.unsplash.com/photo-1595837346738-9226372b0336?w=800',
+                    'Aset/image_e1f326.png'
+                ],
+                shortDesc: 'Inti sawit berkualitas ekspor dengan rendemen tinggi.',
+                fullDesc: 'Inti sawit berkualitas ekspor yang dihasilkan dari proses pemisahan mekanis yang presisi. Produk ini sangat ideal untuk bahan baku minyak inti sawit (PKO), industri kosmetik, dan bahan kimia oleo.',
+                capacity: '300 Ton/Bulan'
+            }
+        ]
+    }">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Produk Unggulan</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Fokus kami adalah menghadirkan kualitas terbaik untuk industri minyak sawit global.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <template x-for="product in products" :key="product.id">
+                    <div class="relative group rounded-3xl overflow-hidden shadow-xl cursor-pointer h-96 border border-slate-200" 
+                         x-data="{ 
+                            activeImgIndex: 0, 
+                            interval: null,
+                            useTransition: true,
+                            
+                            startSlide() {
+                                this.interval = setInterval(() => {
+                                    this.useTransition = true;
+                                    this.activeImgIndex++;
+                                    
+                                    if (this.activeImgIndex === product.images.length) {
+                                        setTimeout(() => {
+                                            this.useTransition = false; 
+                                            this.activeImgIndex = 0;    
+                                        }, 700); 
+                                    }
+                                }, 2000); 
+                            },
+                            stopSlide() {
+                                clearInterval(this.interval);
+                                this.activeImgIndex = 0;
+                                this.useTransition = true;
+                                this.interval = null;
+                            }
+                         }"
+                         @mouseenter="startSlide()"
+                         @mouseleave="stopSlide()"
+                         @click="activeProduct = { ...product, initialIndex: (activeImgIndex === product.images.length ? 0 : activeImgIndex) }">
+                        
+                        <div class="w-full h-full overflow-hidden relative">
+                            <div class="flex h-full w-full" 
+                                 :class="useTransition ? 'transition-transform duration-700 ease-in-out' : ''"
+                                 :style="`transform: translateX(-${activeImgIndex * 100}%)`">
+                                
+                                <template x-for="img in product.images">
+                                    <img :src="img" class="min-w-full h-full object-cover">
+                                </template>
+                                
+                                <img :src="product.images[0]" class="min-w-full h-full object-cover">
+                            </div>
+                        </div>
+                        
+                        <div class="absolute inset-0 z-20 flex flex-col justify-end">
+                            <div class="bg-gradient-to-t from-black/90 via-black/60 to-transparent p-8 transform translate-y-1/4 transition-all duration-500 group-hover:translate-y-0">
+                                <h3 class="text-white font-bold text-3xl mb-3 leading-tight" x-text="product.title"></h3>
+                                <div class="flex items-center gap-3 text-green-400 font-bold uppercase tracking-wider text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                    <span>Lihat Detail Produk</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div x-show="activeProduct" x-cloak class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" @click="activeProduct = null" x-transition.opacity>
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative animate-fade-in-up flex flex-col md:flex-row max-h-[90vh]" @click.stop>
+                <div class="relative md:w-3/5 h-72 md:h-auto bg-slate-900 group" x-data="{ currentModalImg: 0 }" x-init="$watch('activeProduct', value => { currentModalImg = value.initialIndex || 0 })">
+                    <img :src="activeProduct?.images[currentModalImg]" class="w-full h-full object-cover absolute inset-0 transition-opacity duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                    
+                    <button x-show="activeProduct?.images.length > 1" 
+                            @click.stop="currentModalImg = (currentModalImg > 0) ? currentModalImg - 1 : activeProduct.images.length - 1" 
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white text-white hover:text-green-700 backdrop-blur-md rounded-full flex items-center justify-center transition shadow-lg border border-white/30">
+                        <i class="fas fa-chevron-left text-lg"></i>
+                    </button>
+                    
+                    <button x-show="activeProduct?.images.length > 1" 
+                            @click.stop="currentModalImg = (currentModalImg < activeProduct.images.length - 1) ? currentModalImg + 1 : 0" 
+                            class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white text-white hover:text-green-700 backdrop-blur-md rounded-full flex items-center justify-center transition shadow-lg border border-white/30">
+                        <i class="fas fa-chevron-right text-lg"></i>
+                    </button>
+
+                    <div class="absolute bottom-4 left-0 w-full flex justify-center gap-2">
+                        <template x-for="(img, index) in activeProduct?.images">
+                            <div class="w-2 h-2 rounded-full transition-all" :class="currentModalImg === index ? 'bg-white w-6' : 'bg-white/50'"></div>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="p-8 md:w-2/5 overflow-y-auto bg-white flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-green-200">
+                            <i class="fas fa-check-circle mr-1"></i> Produk Unggulan
+                        </div>
+                        <button @click="activeProduct = null" class="text-slate-400 hover:text-red-500 transition transform hover:rotate-90 duration-300"><i class="fas fa-times text-2xl"></i></button>
+                    </div>
+                    
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight mb-2" x-text="activeProduct?.title"></h3>
+                    <div class="h-1 w-20 bg-green-600 rounded-full mb-6"></div>
+                    
+                    <div class="space-y-6 flex-1">
+                        <div>
+                            <span class="text-slate-400 text-sm font-semibold uppercase tracking-wider block mb-1">Kapasitas Produksi</span>
+                            <span class="text-xl font-bold text-slate-800" x-text="activeProduct?.capacity"></span>
+                        </div>
+                        
+                        <div>
+                            <span class="text-slate-400 text-sm font-semibold uppercase tracking-wider block mb-2">Deskripsi Detail</span>
+                            <p class="text-slate-600 text-base leading-relaxed" x-text="activeProduct?.fullDesc"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="keberlanjutan" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-10 fade-in">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Sertifikat Internasional & Penghargaan</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Pengakuan Global atas Komitmen Kualitas dan Keberlanjutan</p>
+            </div>
+
+            <div class="relative group px-1">
+                <button onclick="document.getElementById('cert-container').scrollBy({left: -350, behavior: 'smooth'})" class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 bg-green-600 text-white rounded-full items-center justify-center shadow-lg hover:bg-green-700 transition opacity-0 group-hover:opacity-100 duration-300"><i class="fas fa-chevron-left"></i></button>
+                <div class="overflow-x-auto pb-6 green-scrollbar" id="cert-container">
+                    <div class="grid grid-rows-2 grid-flow-col gap-6 w-max">
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">RSPO Certified</h4><p class="text-xs text-slate-600 mb-2 mt-1">Roundtable on Sustainable Palm Oil - Menjamin praktik keberlanjutan.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2026</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">ISO 14001:2015</h4><p class="text-xs text-slate-600 mb-2 mt-1">Sistem Manajemen Lingkungan.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2025</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">ISO 9001:2015</h4><p class="text-xs text-slate-600 mb-2 mt-1">Sistem Manajemen Kualitas.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2025</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">OHSAS 18001:2007</h4><p class="text-xs text-slate-600 mb-2 mt-1">Sistem Manajemen K3.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2024</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">ISPO Certified</h4><p class="text-xs text-slate-600 mb-2 mt-1">Indonesian Sustainable Palm Oil.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2026</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">GMP/FSSC 22000</h4><p class="text-xs text-slate-600 mb-2 mt-1">Good Manufacturing Practice.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2025</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">HACCP Certified</h4><p class="text-xs text-slate-600 mb-2 mt-1">Hazard Analysis Critical Control Point.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2025</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">PROPER Hijau</h4><p class="text-xs text-slate-600 mb-2 mt-1">Penghargaan lingkungan LHK.</p><p class="text-xs font-bold text-green-700">Tahun: 2024</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">Sertifikasi Halal</h4><p class="text-xs text-slate-600 mb-2 mt-1">Jaminan kehalalan produk.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2028</p></div>
+                        </div>
+                        <div class="w-[350px] bg-green-50 p-6 rounded-xl border border-green-100 flex items-start gap-4 hover:shadow-lg transition-all">
+                            <div class="text-green-600 text-3xl mt-1"><i class="fas fa-certificate"></i></div>
+                            <div><h4 class="font-bold text-slate-900 text-lg">ISCC EU</h4><p class="text-xs text-slate-600 mb-2 mt-1">International Sustainability Certification.</p><p class="text-xs font-bold text-green-700">Berlaku hingga 2026</p></div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('cert-container').scrollBy({left: 350, behavior: 'smooth'})" class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 bg-green-600 text-white rounded-full items-center justify-center shadow-lg hover:bg-green-700 transition opacity-0 group-hover:opacity-100 duration-300"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="mt-16 grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h3 class="text-3xl font-bold text-slate-900 mb-6">Pilar Komitmen Keberlanjutan</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6">Komitmen keberlanjutan ini diimplementasikan melalui beberapa pilar utama di PT Kedap Sayaaq Dua:</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-green-700 text-lg mb-2">1. Pengurangan Emisi GRK</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">Perusahaan menargetkan pengurangan intensitas emisi gas rumah kaca sebesar 17% pada tahun 2030 (baseline 2022). Strategi meliputi optimalisasi rantai pasokan, pengurangan bahan bakar fosil, dan transisi ke energi terbarukan.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-green-700 text-lg mb-2">2. Manajemen Limbah & Energi</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">Pemanfaatan limbah cair sawit (POME) diolah melalui instalasi biogas untuk menghasilkan listrik mandiri yang menggerakkan pabrik dan fasilitas perumahan karyawan.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-green-700 text-lg mb-2">3. Konservasi Air</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">Pengelolaan sumber daya air bertanggung jawab menggunakan teknologi <em>Water Treatment Plant</em> dan <em>Reverse Osmosis</em> untuk menyediakan air bersih bagi karyawan dan masyarakat sekitar.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-green-700 text-lg mb-2">4. Perlindungan Biodiversity</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">Dengan area konservasi seluas 2.436 hektar, kami rutin memonitor spesies flora dan fauna dilindungi, serta melakukan sosialisasi larangan perburuan satwa liar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky top-24">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.DaqPtzxCjrFUWmeUeMCS_QHaE7?pid=Api&P=0&h=220" class="rounded-2xl shadow-2xl w-full h-[500px] object-cover hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fasilitas" class="py-24 bg-gradient-to-b from-slate-50 to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Fasilitas PT. Kedap Sayaaq Dua</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Infrastruktur modern dan lengkap untuk mendukung operasional perkebunan berkelanjutan</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=500&h=280" class="w-full h-56 bg-gradient-to-br from-blue-400 to-blue-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Pabrik Pengolahan CPO</h3>
+                        <p class="text-slate-600 text-sm mb-4">Pabrik pengolahan modern dengan teknologi terkini untuk menghasilkan CPO berkualitas premium dengan kapasitas 500 ton per hari.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Teknologi ISO Certified</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Zero Waste System</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Quality Control 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.OyhOT7vO5S9wIM139D6WVwHaE8?pid=Api&P=0&h=220" class="w-full h-56 bg-gradient-to-br from-purple-400 to-purple-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Laboratorium Riset & QC</h3>
+                        <p class="text-slate-600 text-sm mb-4">Fasilitas laboratorium berstandar internasional untuk pengujian kualitas dan riset pengembangan produk berkelanjutan.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Alat Analisis Modern</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Sertifikasi ISO 17025</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Tim Ahli Bersertifikat</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.oTx2PFCFvlDZE7OcG2Xr9AHaEK?pid=Api&P=0&h=220" class="w-full h-56 bg-gradient-to-br from-orange-400 to-orange-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Sistem Transportasi Terpadu</h3>
+                        <p class="text-slate-600 text-sm mb-4">Armada transportasi modern dan sistem logistik terintegrasi untuk distribusi produk efisien ke seluruh nusantara.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Armada 200+ Kendaraan</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>GPS Tracking Real-time</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Ramah Lingkungan</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=500&h=280" class="w-full h-56 bg-gradient-to-br from-blue-400 to-blue-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Sistem Irigasi Otomatis</h3>
+                        <p class="text-slate-600 text-sm mb-4">Sistem irigasi cerdas dengan teknologi AI untuk optimasi penggunaan air dan efisiensi pertanian berkelanjutan.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Hemat Air 40%</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Sensor IoT Terintegrasi</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Monitoring 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.SQdt7u0cxT297OLG8sqdrQHaFq?pid=Api&P=0&h=220" class="w-full h-56 bg-gradient-to-br from-red-400 to-red-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Pusat Kesehatan Karyawan</h3>
+                        <p class="text-slate-600 text-sm mb-4">Klinik kesehatan modern dengan dokter profesional dan peralatan medis lengkap untuk kesehatan karyawan.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Dokter Spesialis 24 Jam</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Farmasi Lengkap</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Program Vaksinasi Rutin</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 card-hover">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=500&h=280" class="w-full h-56 bg-gradient-to-br from-green-400 to-green-600 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Pusat Pelatihan SDM</h3>
+                        <p class="text-slate-600 text-sm mb-4">Fasilitas pelatihan modern untuk pengembangan kompetensi dan skill karyawan secara berkelanjutan.</p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Program Sertifikasi</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Workshop Rutin</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Mentoring Profesional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-green-700 to-green-600 rounded-2xl p-12 text-white">
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div><div class="text-4xl font-bold mb-2">6+</div><p class="text-green-100">Fasilitas Utama</p></div>
+                    <div><div class="text-4xl font-bold mb-2">95%</div><p class="text-green-100">Efisiensi Operasional</p></div>
+                    <div><div class="text-4xl font-bold mb-2">100%</div><p class="text-green-100">Berkelanjutan</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="relative py-24 overflow-hidden bg-gradient-to-br from-slate-900 to-green-950" 
+        x-data="{ 
+            galleryOpen: false,
+            activeAlbum: null,
+            selectedPhoto: null, // STATE BARU UNTUK ZOOM FOTO
+            albums: [
+                { id: 1, title: 'Kegiatan Panen Raya', icon: 'fa-tractor', photos: ['https://images.unsplash.com/photo-1598335624170-174494db1093?w=800', 'https://images.unsplash.com/photo-1628102491629-778571d893a3?w=800', 'https://images.unsplash.com/photo-1595837346738-9226372b0336?w=800', 'https://plus.unsplash.com/premium_photo-1664302152991-d01334cc2399?w=800', 'https://images.unsplash.com/photo-1600719059428-60a9479b4136?w=800'] },
+                { id: 2, title: 'Pembibitan Unggul', icon: 'fa-seedling', photos: ['https://images.unsplash.com/photo-1595837346738-9226372b0336?w=800', 'https://images.unsplash.com/photo-1628102491629-778571d893a3?w=800', 'https://images.unsplash.com/photo-1530906622963-7a694e304e6c?w=800'] },
+                { id: 3, title: 'Perawatan Kebun', icon: 'fa-leaf', photos: ['https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800', 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800', 'https://images.unsplash.com/photo-1605000797499-95a05f5269f4?w=800'] },
+                { id: 4, title: 'Pabrik Pengolahan', icon: 'fa-industry', photos: ['https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800', 'https://tse3.mm.bing.net/th/id/OIP.OyhOT7vO5S9wIM139D6WVwHaE8?pid=Api&P=0&h=220', 'https://tse3.mm.bing.net/th/id/OIP.oTx2PFCFvlDZE7OcG2Xr9AHaEK?pid=Api&P=0&h=220'] },
+                { id: 5, title: 'Kunjungan Direksi', icon: 'fa-user-tie', photos: ['https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800', 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800', 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800'] },
+                { id: 6, title: 'Kegiatan CSR Warga', icon: 'fa-hand-holding-heart', photos: ['https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800', 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800', 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800'] },
+                { id: 7, title: 'Pelatihan Karyawan', icon: 'fa-chalkboard-teacher', photos: ['https://images.unsplash.com/photo-1552664730-d307ca884978?w=800', 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800'] },
+                { id: 8, title: 'Infrastruktur Jalan', icon: 'fa-road', photos: ['https://images.unsplash.com/photo-1494783367193-149034c05e8f?w=800', 'https://images.unsplash.com/photo-1505150942467-6263728d1468?w=800', 'https://images.unsplash.com/photo-1465447142348-e9952c393450?w=800'] },
+                { id: 9, title: 'Fasilitas Perumahan', icon: 'fa-home', photos: ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800'] },
+                { id: 10, title: 'Penghargaan', icon: 'fa-award', photos: ['https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=800', 'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800', 'https://images.unsplash.com/photo-1579389082947-e54d8e911928?w=800'] },
+            ] 
+        }">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500 rounded-full mix-blend-screen filter blur-[128px] opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-500 rounded-full mix-blend-screen filter blur-[128px] opacity-10"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <div class="fade-in mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Galeri Dokumentasi</h2>
+                <p class="text-xl text-green-100/80 max-w-2xl mx-auto mb-12">Koleksi foto kegiatan operasional dan sosial perusahaan.</p>
+                
+                <button @click="galleryOpen = true" class="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white bg-green-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-green-500/50">
+                    <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-80 group-hover:h-80 opacity-10"></span>
+                    <span class="relative flex items-center gap-3">
+                        <i class="fas fa-folder-open text-2xl"></i> BUKA ALBUM DOKUMENTASI
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div x-show="galleryOpen" x-cloak 
+             class="fixed inset-0 z-[150] bg-slate-900/95 backdrop-blur-md flex flex-col h-screen cursor-pointer" 
+             @click="galleryOpen = false"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95">
+             
+            <div class="flex justify-between items-center p-6 border-b border-white/10 bg-slate-900 z-10 shrink-0 cursor-auto" @click.stop>
+                <h3 class="text-white text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-list text-green-500"></i> Pilih Album Dokumentasi
+                </h3>
+                <button @click="galleryOpen = false" class="text-slate-400 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-10 h-10 transition flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6 md:p-10 bg-black/20 cursor-auto" @click.stop>
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <template x-for="album in albums" :key="album.id">
+                            <div @click="activeAlbum = album" class="bg-white/5 border border-white/10 p-6 rounded-xl cursor-pointer hover:bg-green-600/20 hover:border-green-500/50 transition-all duration-300 flex items-center justify-between group">
+                                <div class="flex items-center gap-4">
+                                    <div>
+                                        <h4 class="font-bold text-white text-lg group-hover:text-green-300 transition-colors" x-text="album.title"></h4>
+                                        <div class="text-slate-400 text-sm flex items-center gap-2 mt-1">
+                                            <i class="fas fa-image text-xs"></i> <span x-text="album.photos.length + ' Foto'"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-green-500 group-hover:text-white transition-all">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="activeAlbum" x-cloak 
+             class="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex flex-col h-screen cursor-pointer" 
+             @click="activeAlbum = null"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-10"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 translate-y-10">
+             
+            <div class="flex justify-between items-center p-4 md:p-6 border-b border-white/10 bg-black/50 z-10 shrink-0 cursor-auto" @click.stop>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button @click="activeAlbum = null" class="text-white/70 hover:text-green-400 transition flex items-center gap-2 px-2 md:px-4 py-2 rounded-lg hover:bg-white/10 text-sm md:text-base">
+                        <i class="fas fa-arrow-left"></i> <span class="hidden md:inline">Kembali</span>
+                    </button>
+                    <div class="h-6 w-px bg-white/20"></div>
+                    <div>
+                        <h3 class="text-white text-base md:text-lg font-bold truncate max-w-[200px] md:max-w-none" x-text="activeAlbum?.title"></h3>
+                    </div>
+                </div>
+                <button @click="activeAlbum = null; galleryOpen = false" class="text-white/50 hover:text-white transition w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10"><i class="fas fa-times text-xl md:text-2xl"></i></button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-4 md:p-10 cursor-auto" @click.stop>
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <template x-for="(photo, index) in activeAlbum?.photos">
+                            <div class="group relative rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900 aspect-[4/3] cursor-zoom-in"
+                                 @click="selectedPhoto = photo">
+                                <img :src="photo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <i class="fas fa-expand text-white text-3xl opacity-80"></i>
+                                </div>
+                                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span class="text-white text-xs font-medium tracking-wider uppercase">Lihat Foto #<span x-text="index + 1"></span></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="selectedPhoto" x-cloak 
+             class="fixed inset-0 z-[300] bg-black/95 flex items-center justify-center p-4 cursor-zoom-out backdrop-blur-sm"
+             @click="selectedPhoto = null"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90">
+             
+            <button @click.stop="selectedPhoto = null" class="absolute top-4 right-4 md:top-6 md:right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10 shadow-lg border border-white/10">
+                <i class="fas fa-times text-xl md:text-2xl"></i>
+            </button>
+            
+            <img :src="selectedPhoto" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" @click.stop>
+        </div>
+
+    </section>
+
+    <section id="jabatan" class="py-24 bg-gradient-to-b from-slate-50 to-white">
+        <div class="max-w-[95%] mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Struktur Organisasi</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Hirarki Profesional PT. Kedap Sayaaq Dua</p>
+                <p class="text-sm text-green-600 mt-2"><i class="fas fa-info-circle"></i> Geser/Scroll ke samping untuk melihat struktur lengkap</p>
+            </div>
+
+            <div class="org-tree-container green-scrollbar">
+                <div class="org-tree">
+                    <ul>
+                        <li>
+                            <div class="org-card">
+                                <img src="https://tse1.mm.bing.net/th/id/OIP.zV6FzKIB_a7KY6Ln-xM6qwHaE5?pid=Api&P=0&h=220" alt="Direktur Utama">
+                                <div class="org-role">Direktur Utama</div>
+                                <div class="org-name">Prabowo Subianto</div>
+                            </div>
+                            
+                            <ul>
+                                <li>
+                                    <div class="org-card">
+                                        <img src="https://tse3.mm.bing.net/th/id/OIP.0l516R4nZwcmjZo7U_BrzQHaE8?pid=Api&P=0&h=220" alt="Wakil Direktur">
+                                        <div class="org-role">Wakil Direktur</div>
+                                        <div class="org-name">Gibran Rakabuming</div>
+                                    </div>
+                                    
+                                    <ul>
+                                        <li>
+                                            <div class="org-card border-t-4 border-green-600">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300" alt="Manajer Kebun">
+                                                <div class="org-role">Manajer Kebun</div>
+                                                <div class="org-name">Agus Hermanto</div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=300" alt="Asisten">
+                                                        <div class="org-role">Asisten Afd I</div>
+                                                        <div class="org-name">Joko Widodo</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1542596594-649edbc13630?auto=format&fit=crop&q=80&w=300" alt="Mandor"><div class="org-role">Mandor Panen</div><div class="org-name">Slamet</div></div></li>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300" alt="Mandor"><div class="org-role">Mandor Rawat</div><div class="org-name">Budi</div></div></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1566492031773-4fbc760171b9?auto=format&fit=crop&q=80&w=300" alt="Asisten">
+                                                        <div class="org-role">Asisten Afd II</div>
+                                                        <div class="org-name">Eko Purnomo</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&q=80&w=300" alt="Mandor"><div class="org-role">Mandor Panen</div><div class="org-name">Yanto</div></div></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <div class="org-card border-t-4 border-blue-600">
+                                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300" alt="Manajer Pabrik">
+                                                <div class="org-role">Manajer Pabrik</div>
+                                                <div class="org-name">Ir. Santoso</div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300" alt="Asisten">
+                                                        <div class="org-role">Asisten Proses</div>
+                                                        <div class="org-name">Dedi Mulyadi</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=300" alt="QC"><div class="org-role">Ka. Lab / QC</div><div class="org-name">Siska</div></div></li>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?auto=format&fit=crop&q=80&w=300" alt="Mandor"><div class="org-role">Mandor Shift</div><div class="org-name">Ahmad</div></div></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300" alt="Asisten">
+                                                        <div class="org-role">Asisten Maint.</div>
+                                                        <div class="org-name">Hendro</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=300" alt="Mandor"><div class="org-role">Mandor Workshop</div><div class="org-name">Ujang</div></div></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <div class="org-card border-t-4 border-yellow-500">
+                                                <img src="https://tse1.mm.bing.net/th/id/OIP.rqrY_nSfLXN-uZhTyvJZ3wHaEK?pid=Api&P=0&h=220" alt="KTU">
+                                                <div class="org-role">Kepala Tata Usaha</div>
+                                                <div class="org-name">Purbaya Y.S.</div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=300" alt="HRD">
+                                                        <div class="org-role">HRD & Umum</div>
+                                                        <div class="org-name">Sri Lestari</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300" alt="Staff"><div class="org-role">Staff Personalia</div><div class="org-name">Siti A.</div></div></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=300" alt="Keuangan">
+                                                        <div class="org-role">Keuangan</div>
+                                                        <div class="org-name">Bambang R.</div>
+                                                    </div>
+                                                    <ul>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300" alt="Kasir"><div class="org-role">Kasir</div><div class="org-name">Putri</div></div></li>
+                                                        <li><div class="org-card"><img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&q=80&w=300" alt="Krani"><div class="org-role">Krani Buku</div><div class="org-name">Dewi</div></div></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <div class="org-card border-t-4 border-red-500">
+                                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300" alt="EHS Manager">
+                                                <div class="org-role">EHS Manager</div>
+                                                <div class="org-name">Rini Andari</div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300" alt="Staff">
+                                                        <div class="org-role">Staff ISPO/RSPO</div>
+                                                        <div class="org-name">Dewi Sartika</div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="org-card">
+                                                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300" alt="Safety">
+                                                        <div class="org-role">Safety Officer</div>
+                                                        <div class="org-name">Bagus T.</div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Hubungi Kami</h2>
+                <p class="text-xl text-slate-600">Tim kami siap membantu kebutuhan bisnis Anda</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <a href="tel:+6282152270420" class="block bg-gradient-to-br from-green-50 to-transparent p-8 rounded-2xl border border-green-200 text-center card-hover">
+                    <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-lg"><i class="fas fa-phone"></i></div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">Telepon</h3>
+                    <p class="text-slate-600 mb-2">+62 82152270420</p>
+                    <p class="text-slate-600 text-sm">Senin - Jumat, 08:00 - 16:00 WIB</p>
+                </a>
+                
+                <a href="https://wa.me/6282152270420" target="_blank" class="block bg-gradient-to-br from-green-50 to-transparent p-8 rounded-2xl border border-green-200 text-center card-hover">
+                    <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-lg"><i class="fab fa-whatsapp"></i></div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">WhatsApp</h3>
+                    <p class="text-slate-600 mb-2">+62 82152270420</p>
+                    <p class="text-slate-600 text-sm">Chat Only (24 Jam)</p>
+                </a>
+                
+                <a href="mailto:contact@kedapsayaaq2.co.id" class="block bg-gradient-to-br from-green-50 to-transparent p-8 rounded-2xl border border-green-200 text-center card-hover">
+                    <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-lg"><i class="fas fa-envelope"></i></div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">Email</h3>
+                    <p class="text-slate-600 mb-2 text-sm">contact@kedapsayaaq2.co.id</p>
+                    <p class="text-slate-600 text-sm">Respon dalam 2-4 jam kerja</p>
+                </a>
+                
+                <a href="https://maps.google.com/?q=PXRH+VX6,+Sebelang,+Kec.+Mook+Manaar+Bulatn" target="_blank" class="block bg-gradient-to-br from-green-50 to-transparent p-8 rounded-2xl border border-green-200 text-center card-hover">
+                    <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-lg"><i class="fas fa-map-location-dot"></i></div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">Kantor Pusat</h3>
+                    <p class="text-slate-600 mb-2">PXRH+VX6, Sebelang</p>
+                    <p class="text-slate-600 text-sm">Kec. Mook Manaar Bulatn, Kutai Barat</p>
+                </a>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg h-full">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3"><i class="far fa-clock text-green-600"></i> Jam Operasional</h3>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><span class="text-slate-600 font-medium">Senin - Jumat</span><span class="text-green-700 font-bold bg-green-50 px-3 py-1 rounded-full text-sm">08:00 - 17:00 WITA</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><span class="text-slate-600 font-medium">Sabtu</span><span class="text-green-700 font-bold bg-green-50 px-3 py-1 rounded-full text-sm">08:00 - 12:00 WITA</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3"><span class="text-slate-600 font-medium">Minggu / Libur</span><span class="text-red-500 font-bold bg-red-50 px-3 py-1 rounded-full text-sm">Tutup</span></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3"><i class="far fa-question-circle text-green-600"></i> Pertanyaan Umum (FAQ)</h3>
+                    <div class="space-y-3">
+                        <details class="group bg-slate-50 p-4 rounded-xl cursor-pointer border border-transparent hover:border-green-200 transition-all">
+                            <summary class="font-semibold text-slate-800 list-none flex justify-between items-center"><span>Apakah menerima pembelian eceran?</span><span class="transition-transform duration-300 group-open:rotate-180 text-green-600"><i class="fas fa-chevron-down"></i></span></summary>
+                            <p class="text-sm text-slate-600 mt-3 leading-relaxed border-t border-slate-200 pt-3">Saat ini kami fokus melayani pembelian skala besar (B2B) untuk industri pengolahan minyak goreng dan pakan ternak. Silakan hubungi tim sales untuk info lebih lanjut.</p>
+                        </details>
+                        <details class="group bg-slate-50 p-4 rounded-xl cursor-pointer border border-transparent hover:border-green-200 transition-all">
+                            <summary class="font-semibold text-slate-800 list-none flex justify-between items-center"><span>Bagaimana prosedur kerjasama supplier?</span><span class="transition-transform duration-300 group-open:rotate-180 text-green-600"><i class="fas fa-chevron-down"></i></span></summary>
+                            <p class="text-sm text-slate-600 mt-3 leading-relaxed border-t border-slate-200 pt-3">Calon mitra dapat mengirimkan profil perusahaan dan penawaran resmi ke email <strong>contact@kedapsayaaq2.co.id</strong> dengan subjek "Penawaran Kerjasama".</p>
+                        </details>
+                        <details class="group bg-slate-50 p-4 rounded-xl cursor-pointer border border-transparent hover:border-green-200 transition-all">
+                            <summary class="font-semibold text-slate-800 list-none flex justify-between items-center"><span>Info lowongan kerja terbaru?</span><span class="transition-transform duration-300 group-open:rotate-180 text-green-600"><i class="fas fa-chevron-down"></i></span></summary>
+                            <p class="text-sm text-slate-600 mt-3 leading-relaxed border-t border-slate-200 pt-3">Informasi karir resmi hanya dipublikasikan melalui website ini dan LinkedIn resmi perusahaan. Hati-hati penipuan yang mengatasnamakan HRD kami.</p>
+                        </details>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-6">Lokasi PT. Kedap Sayaaq Dua</h3>
+                    <div class="bg-white rounded-2xl p-4 border border-slate-200 mb-4 space-y-4 shadow-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="text-green-600 mt-1"><i class="fas fa-map-location-dot text-xl"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-900">Kantor Pusat & Pusat Pengolahan</p>
+                                <p class="text-slate-600 text-sm mt-1 leading-relaxed">PXRH+VX6, Sebelang, Kec. Mook Manaar Bulatn, Kabupaten Kutai Barat, Kalimantan Timur 75774</p>
+                            </div>
+                        </div>
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.8947894053197!2d113.28891!3d1.37841!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31e76cf3c0000001%3A0x1234567890abcdef!2sPXRH%2BVX6%2C%20Sebelang%2C%20Kec.%20Muara%20Pahu%2C%20Kabupaten%20Kutai%20Barat%2C%20Kalimantan%20Timur%2075774!5e0!3m2!1sid!2sid!4v1700000000000" width="100%" height="350" style="border:0; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-300 py-12 border-t-4 border-green-600">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-4"><img src="Aset/logo_ksd.png" alt="Logo" class="h-12 w-12 rounded-lg"><span class="font-bold text-white text-lg">PT. Kedap Sayaaq Dua</span></div>
+                    <p class="text-sm text-slate-400 mb-4">Perkebunan kelapa sawit terdepan dengan komitmen pada keberlanjutan lingkungan dan pemberdayaan masyarakat.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Produk</h4>
+                    <ul class="space-y-2 text-sm"><li><a href="#" class="hover:text-green-400 transition">CPO Premium</a></li><li><a href="#" class="hover:text-green-400 transition">Kernel</a></li><li><a href="#" class="hover:text-green-400 transition">Layanan Logistik</a></li></ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Perusahaan</h4>
+                    <ul class="space-y-2 text-sm"><li><a href="#" class="hover:text-green-400 transition">Tentang Kami</a></li><li><a href="#" class="hover:text-green-400 transition">Keberlanjutan</a></li><li><a href="#" class="hover:text-green-400 transition">Karir</a></li><li><a href="#" class="hover:text-green-400 transition">Berita</a></li></ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Ikuti Kami</h4>
+                    <div class="flex gap-4 mb-6">
+                        <a href="https://facebook.com/PtKedapSayaaq" target="_blank" class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center hover:bg-blue-600 transition"><i class="fab fa-facebook-f text-white"></i></a>
+                        <a href="https://twitter.com/KedapSayaaq" target="_blank" class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center hover:bg-black transition"><i class="fab fa-twitter text-white"></i></a>
+                        <a href="https://linkedin.com/company/pt-kedap-sayaaq-dua" target="_blank" class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center hover:bg-blue-700 transition"><i class="fab fa-linkedin-in text-white"></i></a>
+                        <a href="https://instagram.com/ptkedapsayaaq" target="_blank" class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center hover:bg-pink-600 transition"><i class="fab fa-instagram text-white"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-400"><p>© 2026 PT. Kedap Sayaaq Dua. Semua hak dilindungi.</p></div>
+        </div>
+    </footer>
+
+    <button x-data="{ showTopBtn: false }" @scroll.window="showTopBtn = (window.pageYOffset > 500) ? true : false" x-show="showTopBtn" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-10" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-10" @click="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 z-[90] w-12 h-12 bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-green-700 hover:-translate-y-1 transition-all cursor-pointer border-2 border-white" style="display: none;"><i class="fas fa-arrow-up"></i></button>
+
+    <div id="infoModal" style="display:none" class="fixed inset-0 z-[250] flex items-center justify-center bg-black/60 backdrop-blur-md p-4" onclick="if(event.target===this) this.style.display='none'">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full overflow-hidden relative fade-in">
+            <div class="bg-green-700 p-6 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fas fa-leaf"></i> Profil Perusahaan
+                </h2>
+                <button onclick="document.getElementById('infoModal').style.display='none'" class="text-white/80 hover:text-white transition">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-8 max-h-[80vh] overflow-y-auto">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-green-800 mb-3 border-l-4 border-green-600 pl-3">Visi Perusahaan</h3>
+                    <div class="bg-green-50 p-6 rounded-xl border border-green-100 text-slate-700 italic text-lg leading-relaxed shadow-sm">
+                        "Menjadi perusahaan perkebunan kelapa sawit terkemuka yang paling efisien dan berkelanjutan, memberikan nilai tambah bagi seluruh pemangku kepentingan secara bertanggung jawab."
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold text-green-800 mb-4 border-l-4 border-green-600 pl-3">Misi Kami</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start p-3 hover:bg-slate-50 rounded-lg transition">
+                            <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-md">1</div>
+                            <p class="text-slate-600 leading-relaxed">Mengembangkan praktik agronomi terbaik untuk mencapai produktivitas yang optimal dan berkelanjutan.</p>
+                        </div>
+                        <div class="flex gap-4 items-start p-3 hover:bg-slate-50 rounded-lg transition">
+                            <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-md">2</div>
+                            <p class="text-slate-600 leading-relaxed">Memastikan operasional pabrik pengolahan mencapai efisiensi tertinggi dengan standar kualitas internasional.</p>
+                        </div>
+                        <div class="flex gap-4 items-start p-3 hover:bg-slate-50 rounded-lg transition">
+                            <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-md">3</div>
+                            <p class="text-slate-600 leading-relaxed">Berkomitmen pada pelestarian lingkungan dan pengembangan kesejahteraan sosial masyarakat sekitar (CSR).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-4 bg-yellow-50 rounded-xl border border-yellow-100 text-center">
+                    <p class="text-yellow-800 text-sm font-medium">
+                        <i class="fas fa-star mr-2"></i> PT. Kedap Sayaaq Dua - Inovasi untuk Masa Depan Sawit Indonesia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); });
+        window.addEventListener('click', (e) => { const modals = document.querySelectorAll('[id$="Modal"]'); modals.forEach(modal => { if (e.target === modal) { modal.style.display = 'none'; } }); });
+    </script>
+</body>
+</html>
